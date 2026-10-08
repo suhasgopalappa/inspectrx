@@ -279,7 +279,7 @@ async def analyze_bill(image_base64: str, notes: str | None = None) -> BillAnaly
 
     # Call Gemini Vision
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
+                model="gemini-3.8-flash",
         contents=[
             {
                 "parts": [
