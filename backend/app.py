@@ -112,7 +112,7 @@ async def health_check():
 
 # Serve frontend (catch-all must be last)
 if FRONTEND_DIR.exists():
-    app.mount("/assets", StaticFiles(directory=FRONTEND_DIR / "assets"), name="assets")
+
 
     @app.get("/{full_path:path}")
     async def serve_frontend(full_path: str):
