@@ -1,6 +1,5 @@
-"""AI-powered hospital bill analysis using Claude Vision."""
+"""AI-powered hospital bill analysis using Google Gemini Vision (free tier)."""
 
-import anthropic
 import json
 import base64
 import os
@@ -10,8 +9,6 @@ from datetime import datetime
 from .models import BillAnalysis, LineItem, SeverityLevel
 
 # Reference rates (CGHS 2024 / common Bangalore hospital benchmarks)
-# This is a starter set — in production, this would be a database compiled from
-# hospital tariff cards, CGHS rate lists, and state insurance packages.
 REFERENCE_RATES = {
     "categories": {
         "room_charges": {
@@ -80,7 +77,7 @@ IMPORTANT RULES:
 - Be conservative: flag only clear overcharges, not borderline cases.
 - Note limitations: OCR quality, items you couldn't read, categories you don't have references for.
 
-Respond in this exact JSON format:
+Respond in this exact JSON format (no markdown, no code fences, just raw JSON):
 {{
     "hospital_name": "string or null",
     "patient_name": "string or null (redact last name to initial)",
@@ -239,34 +236,38 @@ def _demo_analysis(bill_id: str) -> BillAnalysis:
             "Room category (General vs Private) based on patient's note — could not verify from bill image alone",
             "MRP references are based on standard published rates and may vary by brand",
             "Doctor visit charges benchmarks vary widely and were not flagged without stronger evidence",
-            "DEMO MODE: This analysis uses pre-built sample data. Set ANTHROPIC_API_KEY for real AI-powered analysis.",
+            "DEMO MODE: This analysis uses pre-built sample data. Set GEMINI_API_KEY for real AI-powered analysis.",
         ],
     )
 
 
 async def analyze_bill(image_base64: str, notes: str | None = None) -> BillAnalysis:
-    """Analyze a hospital bill image using Claude Vision."""
+    """Analyze a hospital bill image using Google Gemini Vision."""
 
     start_time = time.time()
     bill_id = str(uuid.uuid4())[:8]
 
     # Check if API key is available; fall back to demo mode if not
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    api_key = os.environ.get("GEMINI_API_KEY", "")
     if not api_key:
         import asyncio
         await asyncio.sleep(2)  # Simulate processing time
         return _demo_analysis(bill_id)
 
-    client = anthropic.Anthropic()
+    from google import genai
 
-    # Detect image type from base64 header or default to jpeg
-    media_type = "image/jpeg"
+    client = genai.Client(api_key=api_key)
+
+    # Detect MIME type from base64 header
+    mime_type = "image/jpeg"
     if image_base64.startswith("/9j/"):
-        media_type = "image/jpeg"
+        mime_type = "image/jpeg"
     elif image_base64.startswith("iVBOR"):
-        media_type = "image/png"
+        mime_type = "image/png"
+    elif image_base64.startswith("UklGR"):
+        mime_type = "image/webp"
     elif image_base64.startswith("JVBER"):
-        media_type = "application/pdf"
+        mime_type = "application/pdf"
 
     # Build the prompt with reference rates
     prompt = ANALYSIS_PROMPT.format(
@@ -276,33 +277,28 @@ async def analyze_bill(image_base64: str, notes: str | None = None) -> BillAnaly
     if notes:
         prompt += f"\n\nAdditional context from the patient: {notes}"
 
-    # Call Claude Vision
-    message = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=4096,
-        messages=[
+    # Call Gemini Vision
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=[
             {
-                "role": "user",
-                "content": [
+                "parts": [
                     {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": media_type,
+                        "inline_data": {
+                            "mime_type": mime_type,
                             "data": image_base64,
-                        },
+                        }
                     },
                     {
-                        "type": "text",
                         "text": prompt,
                     }
-                ],
+                ]
             }
         ],
     )
 
     # Parse the response
-    response_text = message.content[0].text
+    response_text = response.text
 
     # Extract JSON from the response (handle markdown code blocks)
     if "```json" in response_text:
