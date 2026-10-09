@@ -1,4 +1,4 @@
-"""AI-powered hospital bill analysis using Google Gemini Vision (free tier)."""
+"""AI-powered hospital bill analysis for InspectRx using Google Gemini Vision (free tier)."""
 
 import json
 import base64
@@ -49,7 +49,7 @@ REFERENCE_RATES = {
     }
 }
 
-ANALYSIS_PROMPT = """You are MedBill Check AI, an expert hospital bill auditor for Indian hospitals.
+ANALYSIS_PROMPT = """You are InspectRx, an expert hospital bill auditor for Indian hospitals.
 Analyze this hospital bill image and extract every line item with detailed information.
 
 Your task:
@@ -236,7 +236,7 @@ def _demo_analysis(bill_id: str) -> BillAnalysis:
             "Room category (General vs Private) based on patient's note — could not verify from bill image alone",
             "MRP references are based on standard published rates and may vary by brand",
             "Doctor visit charges benchmarks vary widely and were not flagged without stronger evidence",
-            "DEMO MODE: This analysis uses pre-built sample data. Set GEMINI_API_KEY for real AI-powered analysis.",
+            "DEMO MODE: This analysis uses pre-built sample data. Set GEMINI_API_KEY for real InspectRx AI analysis.",
         ],
     )
 
@@ -279,7 +279,7 @@ async def analyze_bill(image_base64: str, notes: str | None = None) -> BillAnaly
 
     # Call Gemini Vision
     response = client.models.generate_content(
-                model="gemini-3.5-flash",
+        model="gemini-2.5-flash",
         contents=[
             {
                 "parts": [

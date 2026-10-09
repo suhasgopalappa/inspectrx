@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>MedBill Check AI</title>
+  <meta name="description" content="InspectRx — AI-powered hospital bill detective. Upload your bill, find overcharges, save money.">
+  <title>InspectRx — Your Medical Bill Detective</title>
   <link rel="manifest" href="/manifest.json">
   <style>
     :root {
@@ -54,67 +55,313 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ── Header ── */
-    .header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-      color: white;
-      padding: 20px 20px 24px;
-      position: relative;
-      overflow: hidden;
+    /* ══════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════ */
+    .navbar {
+      background: rgba(15,23,42,0.95);
+      backdrop-filter: blur(12px);
+      padding: 14px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%);
-      border-radius: 50%;
+    .navbar-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .header::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -10%;
-      width: 160px;
-      height: 160px;
-      background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .header-content { position: relative; z-index: 1; }
-    .header-brand {
+    .navbar-brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 4px;
+      text-decoration: none;
     }
-    .header-logo {
-      width: 32px;
-      height: 32px;
+    .navbar-logo {
+      width: 32px; height: 32px;
       background: linear-gradient(135deg, var(--primary), var(--accent));
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
     }
-    .header h1 {
-      font-size: 22px;
+    .navbar-name {
+      font-size: 20px;
       font-weight: 800;
       letter-spacing: -0.5px;
       background: linear-gradient(135deg, #fff 30%, #c7d2fe);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .header-sub {
+    .navbar-cta {
+      padding: 9px 20px;
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
       font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+    }
+    .navbar-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(99,102,241,0.4); }
+
+    /* ══════════════════════════════════════
+       HERO SECTION
+    ══════════════════════════════════════ */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f172a 100%);
+      color: white;
+      padding: 60px 20px 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(99,102,241,0.2);
+      border: 1px solid rgba(99,102,241,0.3);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #a5b4fc;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, #818cf8, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 17px;
       color: #94a3b8;
-      margin-left: 42px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-btn {
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-btn.primary {
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      color: white;
+      box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+    }
+    .hero-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.45); }
+    .hero-btn.secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #cbd5e1;
+    }
+    .hero-btn.secondary:hover { background: rgba(255,255,255,0.12); color: white; }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-value {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-stat-label { font-size: 12px; color: #64748b; font-weight: 500; margin-top: 2px; }
+
+    /* ══════════════════════════════════════
+       HOW IT WORKS
+    ══════════════════════════════════════ */
+    .section { padding: 60px 20px; }
+    .section-inner { max-width: 800px; margin: 0 auto; }
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .section-subtitle {
+      text-align: center;
+      font-size: 15px;
+      color: var(--text-tertiary);
+      margin-bottom: 40px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 640px) {
+      .steps-grid { grid-template-columns: 1fr; gap: 16px; }
+      .hero h1 { font-size: 28px; }
+      .hero-sub { font-size: 15px; }
+      .hero-stats { gap: 24px; }
+      .features-grid { grid-template-columns: 1fr !important; }
+    }
+    .step-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .step-num {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .step-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .step-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ══════════════════════════════════════
+       FEATURES
+    ══════════════════════════════════════ */
+    .features-section { background: white; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .feature-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .feature-card:hover { border-color: var(--primary); box-shadow: var(--shadow-glow); }
+    .feature-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+      font-size: 20px;
+    }
+    .feature-icon.purple { background: var(--primary-soft); color: var(--primary); }
+    .feature-icon.red { background: var(--danger-soft); color: var(--danger); }
+    .feature-icon.green { background: var(--success-soft); color: var(--success); }
+    .feature-icon.blue { background: var(--info-soft); color: var(--info); }
+    .feature-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+    .feature-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ══════════════════════════════════════
+       TRUST BAR
+    ══════════════════════════════════════ */
+    .trust-bar {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      padding: 32px 20px;
+      text-align: center;
+      color: white;
+    }
+    .trust-items {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+    .trust-check {
+      width: 20px; height: 20px;
+      background: rgba(16,185,129,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .trust-check svg { width: 12px; height: 12px; }
+
+    /* ══════════════════════════════════════
+       APP SECTION (scanner)
+    ══════════════════════════════════════ */
+    .app-section {
+      background: white;
+      padding: 60px 20px;
+    }
+    .app-section .section-title { margin-bottom: 4px; }
+    .app-section .section-subtitle { margin-bottom: 32px; }
+
     /* ── Container ── */
-    .container { max-width: 440px; margin: 0 auto; padding: 16px; }
+    .container { max-width: 440px; margin: 0 auto; }
 
     /* ── Card ── */
     .card {
@@ -127,12 +374,8 @@
       position: relative;
     }
     .card-title {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--text-tertiary);
-      margin-bottom: 14px;
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-tertiary); margin-bottom: 14px;
     }
 
     /* ── Upload Area ── */
@@ -148,168 +391,82 @@
       overflow: hidden;
     }
     .upload-area::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: linear-gradient(135deg, var(--primary-glow), transparent, rgba(6,182,212,0.1));
-      opacity: 0;
-      transition: opacity var(--transition);
+      opacity: 0; transition: opacity var(--transition);
     }
     .upload-area:hover::before, .upload-area.dragover::before { opacity: 1; }
     .upload-area:hover, .upload-area.dragover {
-      border-color: var(--primary);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-glow);
+      border-color: var(--primary); transform: translateY(-1px); box-shadow: var(--shadow-glow);
     }
-    .upload-area.has-file {
-      border-color: var(--success);
-      background: var(--success-soft);
-      padding: 16px;
-    }
+    .upload-area.has-file { border-color: var(--success); background: var(--success-soft); padding: 16px; }
     .upload-area.has-file::before { display: none; }
 
     .upload-icon-wrap {
-      width: 64px;
-      height: 64px;
-      background: white;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 14px;
-      box-shadow: var(--shadow);
+      width: 64px; height: 64px; background: white; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px; box-shadow: var(--shadow);
     }
     .upload-icon-wrap svg { width: 28px; height: 28px; }
-    .upload-text {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
+    .upload-text { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
     .upload-text span { color: var(--primary); }
-    .upload-hint {
-      font-size: 12px;
-      color: var(--text-tertiary);
-    }
+    .upload-hint { font-size: 12px; color: var(--text-tertiary); }
 
-    /* Preview */
     .preview-container { display: flex; align-items: center; gap: 14px; }
-    .preview-img {
-      width: 56px; height: 56px;
-      object-fit: cover;
-      border-radius: var(--radius-sm);
-      border: 2px solid var(--success);
-    }
+    .preview-img { width: 56px; height: 56px; object-fit: cover; border-radius: var(--radius-sm); border: 2px solid var(--success); }
     .preview-info { flex: 1; text-align: left; }
     .preview-name { font-size: 13px; font-weight: 600; word-break: break-all; color: var(--text); }
     .preview-meta { font-size: 12px; color: var(--success); font-weight: 500; display: flex; align-items: center; gap: 4px; margin-top: 2px; }
     .preview-remove {
-      width: 32px; height: 32px;
-      background: var(--danger-soft);
-      border: none;
-      border-radius: 8px;
-      color: var(--danger);
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all var(--transition);
+      width: 32px; height: 32px; background: var(--danger-soft); border: none;
+      border-radius: 8px; color: var(--danger); font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all var(--transition);
     }
     .preview-remove:hover { background: var(--danger); color: white; }
 
-    /* Capture buttons */
     .capture-buttons { display: flex; gap: 8px; margin-top: 14px; }
     .capture-btn {
-      flex: 1;
-      padding: 11px;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      background: var(--surface);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all var(--transition);
-      color: var(--text);
+      flex: 1; padding: 11px; border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm); background: var(--surface); font-size: 13px;
+      font-weight: 600; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: 6px; transition: all var(--transition); color: var(--text);
     }
     .capture-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
     .capture-btn:active { transform: scale(0.97); }
     .capture-btn svg { width: 18px; height: 18px; }
 
-    /* Notes */
     .notes-input {
-      width: 100%;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      font-size: 14px;
-      font-family: inherit;
-      resize: none;
-      min-height: 64px;
-      transition: all var(--transition);
-      color: var(--text);
-      background: var(--bg);
+      width: 100%; border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+      padding: 12px 14px; font-size: 14px; font-family: inherit; resize: none;
+      min-height: 64px; transition: all var(--transition); color: var(--text); background: var(--bg);
     }
     .notes-input:focus { outline: none; border-color: var(--primary); background: white; box-shadow: 0 0 0 3px var(--primary-glow); }
     .notes-input::placeholder { color: var(--text-tertiary); }
     .notes-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* ── Analyze Button ── */
     .analyze-btn {
-      width: 100%;
-      padding: 15px;
+      width: 100%; padding: 15px;
       background: linear-gradient(135deg, var(--primary), #4f46e5);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all var(--transition);
-      letter-spacing: 0.3px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+      color: white; border: none; border-radius: var(--radius);
+      font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: all var(--transition); letter-spacing: 0.3px;
+      position: relative; overflow: hidden; box-shadow: 0 4px 16px rgba(99,102,241,0.3);
     }
-    .analyze-btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
-    }
+    .analyze-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1)); }
     .analyze-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(99,102,241,0.4); }
     .analyze-btn:active { transform: translateY(0) scale(0.99); }
-    .analyze-btn:disabled {
-      background: #cbd5e1;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
+    .analyze-btn:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
     .analyze-btn:disabled::after { display: none; }
 
     /* ── Loading ── */
     .loading-section { text-align: center; padding: 48px 20px; }
     .pulse-ring {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: var(--primary-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      position: relative;
+      width: 72px; height: 72px; border-radius: 50%; background: var(--primary-soft);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative;
     }
     .pulse-ring::before {
-      content: '';
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      background: var(--primary-glow);
-      animation: pulse 2s ease-in-out infinite;
+      content: ''; position: absolute; inset: -6px; border-radius: 50%;
+      background: var(--primary-glow); animation: pulse 2s ease-in-out infinite;
     }
     .pulse-ring svg { width: 32px; height: 32px; animation: spin 2s linear infinite; position: relative; z-index: 1; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -317,27 +474,18 @@
 
     .loading-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
     .loading-sub { font-size: 13px; color: var(--text-tertiary); margin-bottom: 24px; }
-
     .loading-steps { text-align: left; max-width: 280px; margin: 0 auto; }
     .step {
-      display: flex; align-items: center; gap: 12px;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      color: var(--text-tertiary);
-      transition: all 0.4s ease;
-      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+      border-radius: var(--radius-sm); font-size: 13px; color: var(--text-tertiary);
+      transition: all 0.4s ease; margin-bottom: 4px;
     }
     .step.active { color: var(--primary); font-weight: 600; background: var(--primary-soft); }
     .step.done { color: var(--success); }
     .step-dot {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      border: 2px solid var(--border-strong);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.3s;
-      font-size: 11px;
+      width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border-strong);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: all 0.3s; font-size: 11px;
     }
     .step.active .step-dot { border-color: var(--primary); background: var(--primary); color: white; animation: stepPulse 1.5s ease infinite; }
     .step.done .step-dot { border-color: var(--success); background: var(--success); color: white; }
@@ -345,14 +493,8 @@
 
     /* ── Error ── */
     .error-box {
-      background: var(--danger-soft);
-      border: 1px solid #fecaca;
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 16px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
+      background: var(--danger-soft); border: 1px solid #fecaca; border-radius: var(--radius);
+      padding: 20px; margin-bottom: 16px; display: flex; gap: 14px; align-items: flex-start;
     }
     .error-icon { width: 40px; height: 40px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
     .error-text .error-title { font-size: 15px; font-weight: 700; color: var(--danger); margin-bottom: 2px; }
@@ -362,270 +504,77 @@
     .results-section { display: none; }
     .results-section.visible { display: block; }
 
-    /* Savings Hero */
-    .savings-hero {
-      border-radius: var(--radius);
-      padding: 28px 20px;
-      text-align: center;
-      color: white;
-      margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
-    }
+    .savings-hero { border-radius: var(--radius); padding: 28px 20px; text-align: center; color: white; margin-bottom: 12px; position: relative; overflow: hidden; }
     .savings-hero.high { background: linear-gradient(135deg, #dc2626, #991b1b); }
     .savings-hero.medium { background: linear-gradient(135deg, #f59e0b, #b45309); }
     .savings-hero.low { background: linear-gradient(135deg, #10b981, #047857); }
-    .savings-hero::before {
-      content: '';
-      position: absolute;
-      top: -40%;
-      right: -20%;
-      width: 200px;
-      height: 200px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 50%;
-    }
+    .savings-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 200px; height: 200px; background: rgba(255,255,255,0.08); border-radius: 50%; }
     .savings-hero-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8; margin-bottom: 8px; }
     .savings-hero-amount { font-size: 40px; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
     .savings-hero-sub { font-size: 13px; opacity: 0.85; }
-    .savings-hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(8px);
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 12px;
-    }
+    .savings-hero-badge { display: inline-block; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-top: 12px; }
 
-    /* Bill Info Row */
-    .bill-info {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 16px;
-    }
+    .bill-info { background: var(--surface); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 4px 16px; }
     .bill-info-item { font-size: 12px; color: var(--text-tertiary); }
     .bill-info-item strong { color: var(--text-secondary); font-weight: 600; }
 
-    /* Stats */
-    .stats-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .stat-pill {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 14px 10px;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--border);
-    }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+    .stat-pill { background: var(--surface); border-radius: var(--radius); padding: 14px 10px; text-align: center; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
     .stat-pill-value { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
     .stat-pill-label { font-size: 10px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
 
-    /* ── Flagged Items (redesigned) ── */
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 4px 10px;
-    }
-    .section-header h2 {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.3px;
-    }
-    .section-header .badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: var(--danger-soft);
-      color: var(--danger);
-    }
+    .section-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 4px 10px; }
+    .section-header h2 { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+    .section-header .badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: var(--danger-soft); color: var(--danger); }
 
-    .flag-card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 10px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      transition: all var(--transition);
-    }
-    .flag-card::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-    }
+    .flag-card { background: var(--surface); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; box-shadow: var(--shadow); border: 1px solid var(--border); position: relative; overflow: hidden; transition: all var(--transition); }
+    .flag-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
     .flag-card.high::before { background: linear-gradient(180deg, var(--danger), #b91c1c); }
     .flag-card.medium::before { background: linear-gradient(180deg, var(--warning), #d97706); }
     .flag-card.low::before { background: linear-gradient(180deg, var(--info), #2563eb); }
 
     .flag-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
     .flag-card-title { font-size: 15px; font-weight: 700; color: var(--text); padding-right: 8px; }
-    .severity-chip {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
+    .severity-chip { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
     .severity-chip.high { background: var(--danger); color: white; }
     .severity-chip.medium { background: var(--warning); color: white; }
     .severity-chip.low { background: var(--info); color: white; }
 
     .flag-card-explain { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
 
-    /* Comparison bar */
     .comparison-bar { margin-bottom: 8px; }
-    .comparison-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      margin-bottom: 4px;
-    }
+    .comparison-labels { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
     .comparison-labels .billed { color: var(--danger); font-weight: 700; }
     .comparison-labels .expected { color: var(--success); font-weight: 700; }
-    .bar-track {
-      height: 8px;
-      background: var(--bg);
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-    .bar-expected {
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      background: var(--success);
-      border-radius: 4px;
-      opacity: 0.35;
-    }
-    .bar-billed {
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      background: var(--danger);
-      border-radius: 4px;
-    }
+    .bar-track { height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; position: relative; }
+    .bar-expected { position: absolute; left: 0; top: 0; height: 100%; background: var(--success); border-radius: 4px; opacity: 0.35; }
+    .bar-billed { position: absolute; left: 0; top: 0; height: 100%; background: var(--danger); border-radius: 4px; }
 
-    .flag-card-savings {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--danger-soft);
-      border-radius: var(--radius-xs);
-      padding: 8px 12px;
-    }
+    .flag-card-savings { display: flex; align-items: center; justify-content: space-between; background: var(--danger-soft); border-radius: var(--radius-xs); padding: 8px 12px; }
     .flag-card-savings-label { font-size: 11px; color: #991b1b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
     .flag-card-savings-amount { font-size: 16px; font-weight: 800; color: var(--danger); }
 
-    /* ── Summary ── */
     .summary-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
 
-    /* ── Action Buttons ── */
     .action-buttons { display: flex; gap: 8px; margin-bottom: 12px; }
-    .action-btn {
-      flex: 1;
-      padding: 13px 12px;
-      border-radius: var(--radius);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      transition: all var(--transition);
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
+    .action-btn { flex: 1; padding: 13px 12px; border-radius: var(--radius); font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; transition: all var(--transition); border: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
     .action-btn:active { transform: scale(0.97); }
     .action-btn.primary { background: linear-gradient(135deg, var(--primary), #4f46e5); color: white; box-shadow: 0 4px 12px rgba(99,102,241,0.25); }
     .action-btn.secondary { background: var(--surface); color: var(--text-secondary); border: 1px solid var(--border-strong); }
     .action-btn.secondary:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* ── Recommendations ── */
-    .rec-item {
-      display: flex;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
+    .rec-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
     .rec-item:last-child { border-bottom: none; }
-    .rec-icon {
-      width: 28px; height: 28px;
-      background: linear-gradient(135deg, var(--primary-soft), #e0e7ff);
-      color: var(--primary);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 800;
-      flex-shrink: 0;
-    }
+    .rec-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--primary-soft), #e0e7ff); color: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
 
-    /* ── Line Items ── */
-    .line-items-toggle {
-      width: 100%;
-      background: none;
-      border: none;
-      padding: 0;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--text);
-    }
-    .toggle-arrow {
-      width: 28px; height: 28px;
-      background: var(--bg);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all var(--transition);
-    }
+    .line-items-toggle { width: 100%; background: none; border: none; padding: 0; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text); }
+    .toggle-arrow { width: 28px; height: 28px; background: var(--bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all var(--transition); }
     .toggle-arrow svg { width: 14px; height: 14px; transition: transform var(--transition); }
     .line-items-toggle.open .toggle-arrow svg { transform: rotate(180deg); }
     .line-items-list { display: none; margin-top: 12px; }
     .line-items-list.open { display: block; }
 
-    .li-row {
-      display: flex;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-      gap: 10px;
-    }
+    .li-row { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; gap: 10px; }
     .li-row:last-child { border-bottom: none; }
     .li-row.flagged { background: rgba(239,68,68,0.03); margin: 0 -20px; padding: 10px 20px; border-radius: 6px; }
     .li-sev-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
@@ -634,250 +583,343 @@
     .li-cat { font-size: 11px; color: var(--text-tertiary); }
     .li-amount { font-weight: 700; color: var(--text); white-space: nowrap; font-variant-numeric: tabular-nums; }
 
-    /* ── Confidence ── */
-    .confidence-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .confidence-ring {
-      width: 48px; height: 48px;
-      position: relative;
-      flex-shrink: 0;
-    }
+    .confidence-row { display: flex; align-items: center; gap: 12px; }
+    .confidence-ring { width: 48px; height: 48px; position: relative; flex-shrink: 0; }
     .confidence-ring svg { transform: rotate(-90deg); }
     .confidence-ring-bg { fill: none; stroke: var(--bg); stroke-width: 4; }
     .confidence-ring-fill { fill: none; stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
-    .confidence-pct {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 800;
-    }
+    .confidence-pct { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
     .confidence-text { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
 
-    /* ── Limitations ── */
-    .lim-item {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      padding: 5px 0;
-      padding-left: 16px;
-      position: relative;
-    }
+    .lim-item { font-size: 12px; color: var(--text-tertiary); padding: 5px 0; padding-left: 16px; position: relative; }
     .lim-item::before { content: ''; position: absolute; left: 0; top: 12px; width: 6px; height: 6px; background: var(--border-strong); border-radius: 50%; }
 
-    /* ── Footer ── */
-    .footer {
+    /* ══════════════════════════════════════
+       SITE FOOTER
+    ══════════════════════════════════════ */
+    .site-footer {
+      background: #0f172a;
+      color: #64748b;
+      padding: 40px 20px;
       text-align: center;
-      padding: 24px 16px;
-      font-size: 11px;
-      color: var(--text-tertiary);
-      line-height: 1.6;
+    }
+    .site-footer-brand {
+      font-size: 18px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .site-footer p { font-size: 12px; line-height: 1.8; max-width: 400px; margin: 0 auto; }
+    .site-footer a { color: #818cf8; text-decoration: none; }
+    .site-footer a:hover { color: white; }
+
+    .footer {
+      text-align: center; padding: 24px 16px; font-size: 11px;
+      color: var(--text-tertiary); line-height: 1.6;
     }
 
     /* ── Animations ── */
     @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes countUp { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
     .anim-slide { animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
-    .anim-d1 { animation-delay: 0.05s; }
-    .anim-d2 { animation-delay: 0.1s; }
-    .anim-d3 { animation-delay: 0.15s; }
-    .anim-d4 { animation-delay: 0.2s; }
-    .anim-d5 { animation-delay: 0.25s; }
-    .anim-d6 { animation-delay: 0.3s; }
-    .anim-d7 { animation-delay: 0.35s; }
-    .anim-d8 { animation-delay: 0.4s; }
+    .anim-d1 { animation-delay: 0.05s; } .anim-d2 { animation-delay: 0.1s; }
+    .anim-d3 { animation-delay: 0.15s; } .anim-d4 { animation-delay: 0.2s; }
+    .anim-d5 { animation-delay: 0.25s; } .anim-d6 { animation-delay: 0.3s; }
+    .anim-d7 { animation-delay: 0.35s; } .anim-d8 { animation-delay: 0.4s; }
   </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-content">
-    <div class="header-brand">
-      <div class="header-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+<!-- ══════════ NAVBAR ══════════ -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="#">
+      <div class="navbar-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" width="18" height="18"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </div>
-      <h1>MedBill Check</h1>
+      <span class="navbar-name">InspectRx</span>
+    </a>
+    <a class="navbar-cta" href="#scanner">Scan Your Bill</a>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">AI-Powered Bill Auditor</div>
+    <h1>Stop overpaying for<br><span class="gradient-text">hospital bills</span></h1>
+    <p class="hero-sub">Upload your hospital bill and InspectRx will instantly detect overcharges, duplicate billing, and inflated rates — comparing every line item against CGHS benchmarks.</p>
+    <div class="hero-buttons">
+      <a class="hero-btn primary" href="#scanner">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Inspect My Bill
+      </a>
+      <a class="hero-btn secondary" href="#how-it-works">How It Works</a>
     </div>
-    <div class="header-sub">AI-powered hospital bill auditor</div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value">17+</div>
+        <div class="hero-stat-label">Overcharge patterns detected</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">CGHS 2024</div>
+        <div class="hero-stat-label">Reference rates used</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">30s</div>
+        <div class="hero-stat-label">Average scan time</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section class="section" id="how-it-works">
+  <div class="section-inner">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Three steps to uncover hidden charges in your hospital bill</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Upload Your Bill</h3>
+        <p>Take a photo or upload a scan of your hospital bill. We support JPEG, PNG, WebP, and PDF files.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>AI Inspects Every Line</h3>
+        <p>Our AI reads every charge, compares it against CGHS 2024 rates, MRP limits, and known overcharge patterns.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Get Your Audit Report</h3>
+        <p>See flagged items with exact savings. Download a PDF report to dispute charges with your hospital.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FEATURES ══════════ -->
+<section class="section features-section" id="features">
+  <div class="section-inner">
+    <h2 class="section-title">What InspectRx Catches</h2>
+    <p class="section-subtitle">Common hospital billing tricks that cost you thousands</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon red">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        </div>
+        <h3>MRP Violations</h3>
+        <p>Medications charged above MRP is illegal under India's DPCO. We catch every instance.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 8h20"/><path d="M2 13h20"/></svg>
+        </div>
+        <h3>Double Billing</h3>
+        <p>Same test or item appearing twice on your bill? InspectRx flags duplicate charges instantly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Inflated Consumables</h3>
+        <p>Gloves at 5x market rate? Syringes at 4x? We compare against known market prices.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+        </div>
+        <h3>Room Charge Padding</h3>
+        <p>Billed for a private room when you were in a general ward? We spot category mismatches.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TRUST BAR ══════════ -->
+<div class="trust-bar">
+  <div class="trust-items">
+    <div class="trust-item">
+      <span class="trust-check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+      Free to use
+    </div>
+    <div class="trust-item">
+      <span class="trust-check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+      No sign-up needed
+    </div>
+    <div class="trust-item">
+      <span class="trust-check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+      Bills not stored
+    </div>
+    <div class="trust-item">
+      <span class="trust-check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+      PDF report included
+    </div>
   </div>
 </div>
 
-<div class="container">
+<!-- ══════════ APP / SCANNER ══════════ -->
+<section class="app-section" id="scanner">
+  <h2 class="section-title">Inspect Your Bill Now</h2>
+  <p class="section-subtitle">Upload your hospital bill and get your audit in seconds</p>
 
-  <!-- ── Upload Section ── -->
-  <div id="uploadSection">
-    <div class="card">
-      <div class="card-title">Upload Hospital Bill</div>
-      <div class="upload-area" id="uploadArea">
-        <div id="uploadPlaceholder">
-          <div class="upload-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          </div>
-          <div class="upload-text">Tap to upload or <span>take a photo</span></div>
-          <div class="upload-hint">JPEG, PNG, WebP, or PDF — up to 10 MB</div>
-        </div>
-        <div id="uploadPreview" style="display:none">
-          <div class="preview-container">
-            <img class="preview-img" id="previewImg" alt="Bill preview">
-            <div class="preview-info">
-              <div class="preview-name" id="previewName"></div>
-              <div class="preview-meta" id="previewSize">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span></span>
-              </div>
+  <div class="container">
+    <!-- Upload Section -->
+    <div id="uploadSection">
+      <div class="card">
+        <div class="card-title">Upload Hospital Bill</div>
+        <div class="upload-area" id="uploadArea">
+          <div id="uploadPlaceholder">
+            <div class="upload-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             </div>
-            <button class="preview-remove" id="removeBtn" title="Remove">&times;</button>
+            <div class="upload-text">Tap to upload or <span>take a photo</span></div>
+            <div class="upload-hint">JPEG, PNG, WebP, or PDF — up to 10 MB</div>
+          </div>
+          <div id="uploadPreview" style="display:none">
+            <div class="preview-container">
+              <img class="preview-img" id="previewImg" alt="Bill preview">
+              <div class="preview-info">
+                <div class="preview-name" id="previewName"></div>
+                <div class="preview-meta" id="previewSize">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span></span>
+                </div>
+              </div>
+              <button class="preview-remove" id="removeBtn" title="Remove">&times;</button>
+            </div>
           </div>
         </div>
-      </div>
-      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,application/pdf" hidden>
-      <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
-      <div class="capture-buttons">
-        <button class="capture-btn" id="cameraBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          Camera
-        </button>
-        <button class="capture-btn" id="galleryBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Gallery
-        </button>
-      </div>
-    </div>
-
-    <div class="card">
-      <label class="notes-label" for="notesInput">Additional context</label>
-      <textarea class="notes-input" id="notesInput" placeholder="E.g., 'I was in a general ward, not private room' or 'Surgery was laparoscopic appendectomy'"></textarea>
-    </div>
-
-    <button class="analyze-btn" id="analyzeBtn" disabled>
-      <span>Analyze Bill</span>
-    </button>
-  </div>
-
-  <!-- ── Loading Section ── -->
-  <div id="loadingSection" style="display:none">
-    <div class="card loading-section">
-      <div class="pulse-ring">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-      </div>
-      <div class="loading-title">Analyzing your bill</div>
-      <div class="loading-sub">This usually takes 15–30 seconds</div>
-      <div class="loading-steps">
-        <div class="step active" id="step1"><span class="step-dot"></span> Reading bill image</div>
-        <div class="step" id="step2"><span class="step-dot"></span> Extracting line items</div>
-        <div class="step" id="step3"><span class="step-dot"></span> Checking reference rates</div>
-        <div class="step" id="step4"><span class="step-dot"></span> Identifying overcharges</div>
-        <div class="step" id="step5"><span class="step-dot"></span> Generating report</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── Error Section ── -->
-  <div id="errorSection" style="display:none">
-    <div class="error-box">
-      <div class="error-icon">!</div>
-      <div class="error-text">
-        <div class="error-title">Analysis Failed</div>
-        <p id="errorMessage"></p>
-      </div>
-    </div>
-    <button class="analyze-btn" onclick="resetToUpload()">Try Again</button>
-  </div>
-
-  <!-- ── Results Section ── -->
-  <div id="resultsSection" class="results-section">
-
-    <div class="savings-hero anim-slide" id="savingsHero">
-      <div class="savings-hero-label">Potential Savings Found</div>
-      <div class="savings-hero-amount" id="savingsAmount"></div>
-      <div class="savings-hero-sub" id="savingsSub"></div>
-      <div class="savings-hero-badge" id="savingsBadge"></div>
-    </div>
-
-    <div class="bill-info anim-slide anim-d1" id="billInfo"></div>
-
-    <div class="stats-row anim-slide anim-d2">
-      <div class="stat-pill">
-        <div class="stat-pill-value" id="statBilled"></div>
-        <div class="stat-pill-label">Billed</div>
-      </div>
-      <div class="stat-pill">
-        <div class="stat-pill-value" id="statExpected"></div>
-        <div class="stat-pill-label">Expected</div>
-      </div>
-      <div class="stat-pill">
-        <div class="stat-pill-value" id="statFlagged"></div>
-        <div class="stat-pill-label">Flagged</div>
-      </div>
-    </div>
-
-    <div class="card anim-slide anim-d3">
-      <div class="card-title">Summary</div>
-      <p class="summary-text" id="summaryText"></p>
-    </div>
-
-    <div id="flaggedSection">
-      <div class="section-header anim-slide anim-d4">
-        <h2>Flagged Items</h2>
-        <span class="badge" id="flaggedBadge"></span>
-      </div>
-      <div id="flaggedList"></div>
-    </div>
-
-    <div class="action-buttons anim-slide anim-d5">
-      <button class="action-btn primary" id="downloadPdfBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download PDF
-      </button>
-      <button class="action-btn secondary" onclick="resetToUpload()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-        New Audit
-      </button>
-    </div>
-
-    <div class="card anim-slide anim-d6" id="recsCard">
-      <div class="card-title">Recommended Actions</div>
-      <div id="recsList"></div>
-    </div>
-
-    <div class="card anim-slide anim-d7">
-      <button class="line-items-toggle" id="lineItemsToggle">
-        <span>All Line Items (<span id="lineItemsCount">0</span>)</span>
-        <span class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></span>
-      </button>
-      <div class="line-items-list" id="lineItemsList"></div>
-    </div>
-
-    <div class="card anim-slide anim-d8">
-      <div class="card-title">Analysis Confidence</div>
-      <div class="confidence-row">
-        <div class="confidence-ring">
-          <svg width="48" height="48" viewBox="0 0 48 48">
-            <circle class="confidence-ring-bg" cx="24" cy="24" r="20"/>
-            <circle class="confidence-ring-fill" id="confRing" cx="24" cy="24" r="20" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
-          </svg>
-          <div class="confidence-pct" id="confPct"></div>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,application/pdf" hidden>
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+        <div class="capture-buttons">
+          <button class="capture-btn" id="cameraBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Camera
+          </button>
+          <button class="capture-btn" id="galleryBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Gallery
+          </button>
         </div>
-        <div class="confidence-text" id="confText"></div>
+      </div>
+
+      <div class="card">
+        <label class="notes-label" for="notesInput">Additional context</label>
+        <textarea class="notes-input" id="notesInput" placeholder="E.g., 'I was in a general ward, not private room' or 'Surgery was laparoscopic appendectomy'"></textarea>
+      </div>
+
+      <button class="analyze-btn" id="analyzeBtn" disabled>
+        <span>Analyze Bill</span>
+      </button>
+    </div>
+
+    <!-- Loading Section -->
+    <div id="loadingSection" style="display:none">
+      <div class="card loading-section">
+        <div class="pulse-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="loading-title">Inspecting your bill</div>
+        <div class="loading-sub">This usually takes 15-30 seconds</div>
+        <div class="loading-steps">
+          <div class="step active" id="step1"><span class="step-dot"></span> Reading bill image</div>
+          <div class="step" id="step2"><span class="step-dot"></span> Extracting line items</div>
+          <div class="step" id="step3"><span class="step-dot"></span> Checking reference rates</div>
+          <div class="step" id="step4"><span class="step-dot"></span> Identifying overcharges</div>
+          <div class="step" id="step5"><span class="step-dot"></span> Generating report</div>
+        </div>
       </div>
     </div>
 
-    <div class="card anim-slide anim-d8" id="limitationsCard">
-      <div class="card-title">Limitations</div>
-      <div id="limitationsList"></div>
+    <!-- Error Section -->
+    <div id="errorSection" style="display:none">
+      <div class="error-box">
+        <div class="error-icon">!</div>
+        <div class="error-text">
+          <div class="error-title">Analysis Failed</div>
+          <p id="errorMessage"></p>
+        </div>
+      </div>
+      <button class="analyze-btn" onclick="resetToUpload()">Try Again</button>
     </div>
 
-    <div class="footer">
-      This report is for informational purposes only.<br>
-      Consult a medical billing professional before disputing charges.
+    <!-- Results Section -->
+    <div id="resultsSection" class="results-section">
+      <div class="savings-hero anim-slide" id="savingsHero">
+        <div class="savings-hero-label">Potential Savings Found</div>
+        <div class="savings-hero-amount" id="savingsAmount"></div>
+        <div class="savings-hero-sub" id="savingsSub"></div>
+        <div class="savings-hero-badge" id="savingsBadge"></div>
+      </div>
+
+      <div class="bill-info anim-slide anim-d1" id="billInfo"></div>
+
+      <div class="stats-row anim-slide anim-d2">
+        <div class="stat-pill"><div class="stat-pill-value" id="statBilled"></div><div class="stat-pill-label">Billed</div></div>
+        <div class="stat-pill"><div class="stat-pill-value" id="statExpected"></div><div class="stat-pill-label">Expected</div></div>
+        <div class="stat-pill"><div class="stat-pill-value" id="statFlagged"></div><div class="stat-pill-label">Flagged</div></div>
+      </div>
+
+      <div class="card anim-slide anim-d3"><div class="card-title">Summary</div><p class="summary-text" id="summaryText"></p></div>
+
+      <div id="flaggedSection">
+        <div class="section-header anim-slide anim-d4"><h2>Flagged Items</h2><span class="badge" id="flaggedBadge"></span></div>
+        <div id="flaggedList"></div>
+      </div>
+
+      <div class="action-buttons anim-slide anim-d5">
+        <button class="action-btn primary" id="downloadPdfBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PDF
+        </button>
+        <button class="action-btn secondary" onclick="resetToUpload()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+          New Audit
+        </button>
+      </div>
+
+      <div class="card anim-slide anim-d6" id="recsCard"><div class="card-title">Recommended Actions</div><div id="recsList"></div></div>
+
+      <div class="card anim-slide anim-d7">
+        <button class="line-items-toggle" id="lineItemsToggle">
+          <span>All Line Items (<span id="lineItemsCount">0</span>)</span>
+          <span class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="line-items-list" id="lineItemsList"></div>
+      </div>
+
+      <div class="card anim-slide anim-d8">
+        <div class="card-title">Analysis Confidence</div>
+        <div class="confidence-row">
+          <div class="confidence-ring">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle class="confidence-ring-bg" cx="24" cy="24" r="20"/>
+              <circle class="confidence-ring-fill" id="confRing" cx="24" cy="24" r="20" stroke-dasharray="125.66" stroke-dashoffset="125.66"/>
+            </svg>
+            <div class="confidence-pct" id="confPct"></div>
+          </div>
+          <div class="confidence-text" id="confText"></div>
+        </div>
+      </div>
+
+      <div class="card anim-slide anim-d8" id="limitationsCard"><div class="card-title">Limitations</div><div id="limitationsList"></div></div>
+
+      <div class="footer">
+        This report is for informational purposes only.<br>
+        Consult a medical billing professional before disputing charges.
+      </div>
     </div>
   </div>
+</section>
 
-</div>
+<!-- ══════════ SITE FOOTER ══════════ -->
+<footer class="site-footer">
+  <div class="site-footer-brand">InspectRx</div>
+  <p>Your medical bill detective. AI-powered hospital bill auditing using CGHS 2024 reference rates.<br>
+  Built in Bengaluru. Made for every Indian patient.<br><br>
+  <a href="#scanner">Scan a Bill</a> &middot; <a href="#how-it-works">How It Works</a> &middot; <a href="#features">Features</a><br><br>
+  &copy; 2024 InspectRx. For informational purposes only.</p>
+</footer>
 
 <script>
 (function() {
@@ -894,7 +936,6 @@
   const cameraInput = $('cameraInput');
   const analyzeBtn = $('analyzeBtn');
 
-  // File handling
   $('cameraBtn').addEventListener('click', () => cameraInput.click());
   $('galleryBtn').addEventListener('click', () => fileInput.click());
   uploadArea.addEventListener('click', e => {
@@ -904,8 +945,7 @@
   uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
   uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
   uploadArea.addEventListener('drop', e => {
-    e.preventDefault();
-    uploadArea.classList.remove('dragover');
+    e.preventDefault(); uploadArea.classList.remove('dragover');
     if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
   });
 
@@ -935,9 +975,7 @@
   $('removeBtn').addEventListener('click', e => { e.stopPropagation(); clearFile(); });
 
   function clearFile() {
-    selectedFile = null;
-    fileInput.value = '';
-    cameraInput.value = '';
+    selectedFile = null; fileInput.value = ''; cameraInput.value = '';
     $('uploadPlaceholder').style.display = 'block';
     $('uploadPreview').style.display = 'none';
     uploadArea.classList.remove('has-file');
@@ -950,7 +988,6 @@
     return (b/1048576).toFixed(1) + ' MB';
   }
 
-  // Analyze
   analyzeBtn.addEventListener('click', startAnalysis);
 
   async function startAnalysis() {
@@ -970,7 +1007,7 @@
       currentAnalysis = data.analysis;
       renderResults(data.analysis);
       showSection('results');
-    } catch { showError('Network error. Check connection and try again.'); }
+    } catch { showError('We\'re experiencing high demand. Please try again in a moment.'); }
   }
 
   function animateSteps() {
@@ -979,8 +1016,7 @@
     const iv = setInterval(() => {
       if (i > 0) {
         const prev = $(ids[i-1]);
-        prev.classList.remove('active');
-        prev.classList.add('done');
+        prev.classList.remove('active'); prev.classList.add('done');
         prev.querySelector('.step-dot').innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
       }
       if (i < ids.length) { $(ids[i]).classList.add('active'); i++; }
@@ -1000,31 +1036,24 @@
   function showError(msg) { $('errorMessage').textContent = msg; showSection('error'); }
 
   window.resetToUpload = function() {
-    clearFile();
-    $('notesInput').value = '';
-    currentAnalysis = null;
+    clearFile(); $('notesInput').value = ''; currentAnalysis = null;
     showSection('upload');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('scanner').scrollIntoView({ behavior: 'smooth' });
   };
 
   function fmt(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
   function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-  // Render
   function renderResults(a) {
     const savPct = a.total_billed > 0 ? (a.total_potential_savings / a.total_billed * 100) : 0;
 
-    // Savings hero
     const hero = $('savingsHero');
     hero.className = 'savings-hero anim-slide ' + (savPct > 15 ? 'high' : savPct > 5 ? 'medium' : 'low');
     $('savingsAmount').textContent = fmt(a.total_potential_savings);
     $('savingsSub').textContent = savPct.toFixed(1) + '% of your total bill';
     $('savingsBadge').textContent = a.flagged_items.length + ' issue' + (a.flagged_items.length !== 1 ? 's' : '') + ' found';
-
-    // Animate count
     animateValue($('savingsAmount'), 0, a.total_potential_savings, 800);
 
-    // Bill info
     const info = $('billInfo');
     let infoHtml = '';
     if (a.hospital_name) infoHtml += `<span class="bill-info-item"><strong>${esc(a.hospital_name)}</strong></span>`;
@@ -1034,20 +1063,14 @@
     info.innerHTML = infoHtml;
     info.style.display = infoHtml ? 'flex' : 'none';
 
-    // Stats
     $('statBilled').textContent = fmt(a.total_billed);
     $('statExpected').textContent = a.total_expected ? fmt(a.total_expected) : '—';
     $('statFlagged').textContent = a.flagged_items.length + '/' + a.line_items.length;
-
-    // Summary
     $('summaryText').textContent = a.summary;
 
-    // Flagged items
-    const fl = $('flaggedList');
-    fl.innerHTML = '';
-    if (!a.flagged_items.length) {
-      $('flaggedSection').style.display = 'none';
-    } else {
+    const fl = $('flaggedList'); fl.innerHTML = '';
+    if (!a.flagged_items.length) { $('flaggedSection').style.display = 'none'; }
+    else {
       $('flaggedSection').style.display = 'block';
       $('flaggedBadge').textContent = a.flagged_items.length + ' found';
       a.flagged_items.forEach((item, idx) => {
@@ -1056,82 +1079,50 @@
         const maxAmt = Math.max(item.billed_amount, item.reference_amount || 0);
         const billedPct = maxAmt > 0 ? (item.billed_amount / maxAmt * 100) : 100;
         const expPct = maxAmt > 0 && item.reference_amount ? (item.reference_amount / maxAmt * 100) : 0;
-
         const div = document.createElement('div');
         div.className = 'flag-card ' + sev + ' anim-slide';
         div.style.animationDelay = (0.05 * idx) + 's';
         div.innerHTML = `
-          <div class="flag-card-top">
-            <div class="flag-card-title">${esc(item.description)}</div>
-            <span class="severity-chip ${sev}">${esc(flagLabel)}</span>
-          </div>
+          <div class="flag-card-top"><div class="flag-card-title">${esc(item.description)}</div><span class="severity-chip ${sev}">${esc(flagLabel)}</span></div>
           <div class="flag-card-explain">${esc(item.explanation || '')}</div>
-          ${item.reference_amount ? `
-          <div class="comparison-bar">
-            <div class="comparison-labels">
-              <span class="billed">Billed: ${fmt(item.billed_amount)}</span>
-              <span class="expected">Expected: ${fmt(item.reference_amount)}</span>
-            </div>
-            <div class="bar-track">
-              <div class="bar-expected" style="width:${billedPct}%"></div>
-              <div class="bar-billed" style="width:${expPct}%"></div>
-            </div>
-          </div>` : `<div style="font-size:12px;color:var(--text-tertiary);margin-bottom:8px">Billed: ${fmt(item.billed_amount)}</div>`}
-          ${item.potential_savings > 0 ? `
-          <div class="flag-card-savings">
-            <span class="flag-card-savings-label">Potential saving</span>
-            <span class="flag-card-savings-amount">${fmt(item.potential_savings)}</span>
-          </div>` : ''}
+          ${item.reference_amount ? `<div class="comparison-bar"><div class="comparison-labels"><span class="billed">Billed: ${fmt(item.billed_amount)}</span><span class="expected">Expected: ${fmt(item.reference_amount)}</span></div><div class="bar-track"><div class="bar-expected" style="width:${billedPct}%"></div><div class="bar-billed" style="width:${expPct}%"></div></div></div>` : `<div style="font-size:12px;color:var(--text-tertiary);margin-bottom:8px">Billed: ${fmt(item.billed_amount)}</div>`}
+          ${item.potential_savings > 0 ? `<div class="flag-card-savings"><span class="flag-card-savings-label">Potential saving</span><span class="flag-card-savings-amount">${fmt(item.potential_savings)}</span></div>` : ''}
         `;
         fl.appendChild(div);
       });
     }
 
-    // Recommendations
-    const rl = $('recsList');
-    rl.innerHTML = '';
+    const rl = $('recsList'); rl.innerHTML = '';
     if (a.recommendations && a.recommendations.length) {
       $('recsCard').style.display = 'block';
       a.recommendations.forEach((r, i) => {
-        const d = document.createElement('div');
-        d.className = 'rec-item';
+        const d = document.createElement('div'); d.className = 'rec-item';
         d.innerHTML = `<span class="rec-icon">${i+1}</span><span>${esc(r)}</span>`;
         rl.appendChild(d);
       });
     } else { $('recsCard').style.display = 'none'; }
 
-    // Line items
-    const ll = $('lineItemsList');
-    ll.innerHTML = '';
+    const ll = $('lineItemsList'); ll.innerHTML = '';
     $('lineItemsCount').textContent = a.line_items.length;
     a.line_items.forEach(item => {
       const sevColor = item.severity === 'high' ? 'var(--danger)' : item.severity === 'medium' ? 'var(--warning)' : item.severity === 'low' ? 'var(--info)' : 'transparent';
       const d = document.createElement('div');
       d.className = 'li-row' + (item.flag ? ' flagged' : '');
-      d.innerHTML = `
-        <div class="li-sev-dot" style="background:${sevColor}"></div>
-        <div class="li-content">
-          <div class="li-name">${esc(item.description)}</div>
-          <div class="li-cat">${esc(item.category)}</div>
-        </div>
-        <div class="li-amount">${fmt(item.billed_amount)}</div>
-      `;
+      d.innerHTML = `<div class="li-sev-dot" style="background:${sevColor}"></div><div class="li-content"><div class="li-name">${esc(item.description)}</div><div class="li-cat">${esc(item.category)}</div></div><div class="li-amount">${fmt(item.billed_amount)}</div>`;
       ll.appendChild(d);
     });
 
     const toggle = $('lineItemsToggle');
-    toggle.classList.remove('open');
-    ll.classList.remove('open');
+    toggle.classList.remove('open'); ll.classList.remove('open');
     toggle.onclick = () => { toggle.classList.toggle('open'); ll.classList.toggle('open'); };
 
-    // Confidence ring
     const confPct = Math.round(a.confidence_score * 100);
     const confColor = confPct > 70 ? 'var(--success)' : confPct > 40 ? 'var(--warning)' : 'var(--danger)';
     $('confPct').textContent = confPct + '%';
     $('confPct').style.color = confColor;
     const ring = $('confRing');
     ring.style.stroke = confColor;
-    const circ = 2 * Math.PI * 20; // ~125.66
+    const circ = 2 * Math.PI * 20;
     ring.style.strokeDashoffset = circ;
     setTimeout(() => { ring.style.strokeDashoffset = circ - (circ * confPct / 100); }, 200);
 
@@ -1142,23 +1133,14 @@
     };
     $('confText').textContent = confPct > 70 ? confTexts.high : confPct > 40 ? confTexts.med : confTexts.low;
 
-    // Limitations
-    const limList = $('limitationsList');
-    limList.innerHTML = '';
+    const limList = $('limitationsList'); limList.innerHTML = '';
     if (a.limitations && a.limitations.length) {
       $('limitationsCard').style.display = 'block';
-      a.limitations.forEach(l => {
-        const d = document.createElement('div');
-        d.className = 'lim-item';
-        d.textContent = l;
-        limList.appendChild(d);
-      });
+      a.limitations.forEach(l => { const d = document.createElement('div'); d.className = 'lim-item'; d.textContent = l; limList.appendChild(d); });
     } else { $('limitationsCard').style.display = 'none'; }
 
-    // PDF
     $('downloadPdfBtn').onclick = () => window.open('/api/report/' + a.bill_id, '_blank');
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('scanner').scrollIntoView({ behavior: 'smooth' });
   }
 
   function animateValue(el, start, end, duration) {
@@ -1173,6 +1155,15 @@
     }
     requestAnimationFrame(update);
   }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 })();
 </script>
 

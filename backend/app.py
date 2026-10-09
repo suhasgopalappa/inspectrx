@@ -1,4 +1,4 @@
-"""FastAPI backend for MedBill Check AI."""
+"""FastAPI backend for InspectRx."""
 
 import base64
 import time
@@ -14,7 +14,7 @@ from .analyzer import analyze_bill
 from .report_generator import generate_report_pdf
 from .models import AuditResponse, BillAnalysis
 
-app = FastAPI(title="MedBill Check AI", version="1.0.0")
+app = FastAPI(title="InspectRx", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -85,7 +85,7 @@ async def get_report_pdf(bill_id: str):
     analysis = analyses_store[bill_id]
     pdf_bytes = generate_report_pdf(analysis)
 
-    filename = f"MedBill_Audit_{analysis.hospital_name or 'Report'}_{analysis.bill_id}.pdf"
+    filename = f"InspectRx_Audit_{analysis.hospital_name or 'Report'}_{analysis.bill_id}.pdf"
     filename = filename.replace(" ", "_")
 
     return Response(
@@ -112,7 +112,9 @@ async def health_check():
 
 # Serve frontend (catch-all must be last)
 if FRONTEND_DIR.exists():
-
+    assets_dir = FRONTEND_DIR / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
     @app.get("/{full_path:path}")
     async def serve_frontend(full_path: str):

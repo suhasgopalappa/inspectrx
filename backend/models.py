@@ -1,4 +1,4 @@
-"""Data models for MedBill Check AI."""
+"""Data models for InspectRx."""
 
 from pydantic import BaseModel
 from datetime import datetime
